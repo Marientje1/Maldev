@@ -1,3 +1,5 @@
+/* Popping my first calc with shellcode injection */
+
 #include <windows.h>
 #include <stdio.h>
 
@@ -80,6 +82,7 @@ int main(int argc, char* argv[]){
     }
 
     printf("%s Got a handle to the thread(%ld)\n\\---0x%p\n", k, TID, hTread);
+
     
     WaitForSingleObject(hTread, INFINITE);
     printf("%s Thread finished\n", k);
